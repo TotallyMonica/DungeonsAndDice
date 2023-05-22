@@ -7,7 +7,19 @@ from os import getenv
 
 class DungeonsAndDiceBot(discord.Client):
     async def on_ready(self):
+        client_id = 1109967224292257922
+        permissions = 277025459200
+        scopes = ['bot', 'applications.commands']
+        url = f"https://discord.com/api/oauth2/authorize?client_id={client_id}&permissions={permissions}"
+        if scopes:
+            url += "&scope="
+            for scope in scopes:
+                if scope == scopes[-1]:
+                    url += scope
+                else:
+                    url += f"{scope}%20"
         print(f"Chatbot logged on as {self.user}!")
+        print(f"Invite me with {url}")
 
     async def on_message(self, message):
         print(message.content)
@@ -79,7 +91,7 @@ def main():
         raise ValueError("Error: Token not provided. This might be due to .env not existing. Try copying the sample env file to .env with your bot's token.")
     intents = discord.Intents.default()
     intents.message_content = True
-    bot = DungeonsAndDiceBot(command_prefix="!", intents=intents)
+    bot = DungeonsAndDiceBot(command_prefix="!", intents=intents, )
     bot.run(bot_token)
 
 if __name__ == "__main__":
